@@ -1,0 +1,60 @@
+.layout {
+    display: flex;
+    height: 100vh;
+    background: gainsboro;
+    flex: 1;
+
+    .sidebar {
+        width: 160px;
+        background-color: darkgrey;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        
+        .logout{
+           margin-bottom: 20px;
+            margin-left: 20px;
+            padding: 4px;
+        }
+
+    }
+
+    h3 {
+        padding: 18px;
+        color: rgb(41, 74, 134);
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 18px;
+       
+        a{
+              text-decoration: none;
+              color: rgb(41, 74, 134); ;
+        }
+
+    }
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            background-color: darkgrey;
+            color: #000;
+
+        }
+
+        .routing-view {
+            display: flex;
+            flex: 1;
+        }
+    }
+}
