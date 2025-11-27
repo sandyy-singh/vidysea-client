@@ -1,60 +1,77 @@
+// src/context/AuthContext.jsx
 import { createContext, useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-useNavigate
 
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-    const [userRole, setUserRole] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [name,setName] =useState("")
-    const navigate = useNavigate()
+  const [userRole, setUserRole] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchUserRole = async () => {
-            try {
-                const res = await axios.get("https://vidysea-server.onrender.com/api/auth/userRole", {
-                    withCredentials: true
-                });
-                setUserRole(res.data.role)
-                setName(res.data.name)
-                console.log("res", res.data.role)
-            } catch (err) {
-                setUserRole(null)
-                console.log("dcfgvhbjn")
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchUserRole()
-    }, [])
-
-    const logOut = async () => {
-        console.log("logOut")
-        try {
-            const res = await axios.post("https://vidysea-server.onrender.com/api/auth/logOut", {}, { withCredentials: true });
-            console.log("logOut", res.data)
-            setUserRole(null);
-            // window.location.href = "/"; // Redirect to login
-            navigate('/', { replace: true });
-
-            // push a new state so Back doesn't go to protected page
-            // (this makes current page the only entry)
-            window.history.pushState(null, '', '/');
-            // optional: also replace state
-            window.history.replaceState(null, '', '/');
-
-        } catch (err) {
-            console.log(err);
-        }
-
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const res = await axios.get(
+          "https://vidysea-server.onrender.com/api/auth/userRole",
+          { withCredentials: true }
+        );
+        // set role and name from response
+        setUserRole(res.data.role ?? null);
+        setName(res.data.name ?? "");
+        console.log("fetched role:", res.data.role, "name:", res.data.name);
+      } catch (err) {
+        setUserRole(null);
+        setName("");
+        console.error("fetchUserRole error:", err);
+      } finally {
+        setLoading(false);
+      }
     };
+    fetchUserRole();
+  }, []);
 
-    return (
+  const logOut = async () => {
+    try {
+      const res = await axios.post(
+        "https://vidysea-server.onrender.com/api/auth/logOut",
+        {},
+        { withCredentials: true }
+      );
+      console.log("logOut", res.data);
 
-        <AppContext.Provider value={{ userRole, setUserRole, loading,name, setLoading, logOut }}>
-            {children}
-        </AppContext.Provider>
-    )
-}
+      // clear context state
+      setUserRole(null);
+      setName("");
+
+      // clear any client storage if you used one
+      try { localStorage.removeItem("user"); } catch (e) {}
+      try { sessionStorage.removeItem("user"); } catch (e) {}
+
+      // clear axios auth header if set
+      if (axios.defaults.headers.common["Authorization"]) {
+        delete axios.defaults.headers.common["Authorization"];
+      }
+
+      // SPA redirect (replace so back doesn't go to protected page)
+      navigate("/", { replace: true });
+
+    } catch (err) {
+      console.error("logout error:", err);
+      // still clear client state to avoid stale UI
+      setUserRole(null);
+      setName("");
+      navigate("/", { replace: true });
+    }
+  };
+
+  return (
+    <AppContext.Provider
+      value={{ userRole, setUserRole, loading, name,setName, setName, logOut }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};

@@ -12,7 +12,7 @@ const SignIn = () => {
     password: '',
   });
   const navigate = useNavigate()
-  const { userRole, setUserRole } = useContext(AppContext)
+  const { userRole, setUserRole,setName } = useContext(AppContext)
   useEffect(() => {
     if (userRole) {
       navigate(`/dashboard/${userRole}`);
@@ -21,8 +21,8 @@ const SignIn = () => {
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // page reload na ho
-    console.log('Form Submitted:', formData);
+    e.preventDefault();
+   
 
     try {
       const res = await axios.post("https://vidysea-server.onrender.com/api/auth/login", formData, {
@@ -32,6 +32,7 @@ const SignIn = () => {
       
       alert(res.data.message)
       console.log(res.data.role)
+      setName(res.data.name)
       setUserRole(res.data.role)
 
     } catch (err) {
