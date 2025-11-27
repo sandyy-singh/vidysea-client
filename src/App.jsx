@@ -19,7 +19,7 @@ function App() {
       <AppProvider>
         <Routes>
           <Route path="/" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/SignUp" element={<SignUp />} />
 
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path="/dashboard/admin" element={<DashboardLayout />}>
