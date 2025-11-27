@@ -14,7 +14,7 @@ export const AppProvider = ({ children }) => {
     useEffect(() => {
         const fetchUserRole = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/auth/userRole", {
+                const res = await axios.get("https://vidysea-server.onrender.com/api/auth/userRole", {
                     withCredentials: true
                 });
                 setUserRole(res.data.role)
@@ -33,7 +33,7 @@ export const AppProvider = ({ children }) => {
     const logOut = async () => {
         console.log("logOut")
         try {
-            const res = await axios.post("http://localhost:5000/api/auth/logOut", {}, { withCredentials: true });
+            const res = await axios.post("https://vidysea-server.onrender.com/api/auth/logOut", {}, { withCredentials: true });
             console.log("logOut", res.data)
             setUserRole(null);
             // window.location.href = "/"; // Redirect to login

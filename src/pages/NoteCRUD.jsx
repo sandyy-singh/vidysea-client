@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/note"; // ✅ fixed endpoint (plural)
+const API_URL = "https://vidysea-server.onrender.com/api/note"; // ✅ fixed endpoint (plural)
 
 const NoteCRUD = () => {
   const [notes, setNotes] = useState([]);
