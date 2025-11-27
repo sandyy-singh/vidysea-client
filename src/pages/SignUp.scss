@@ -1,54 +1,65 @@
 .signup {
+    height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
     flex: 1;
-    background-color: bisque;
+    align-items: center;
+    background-color: #f5e4d0; // soft neutral background
 
     .signupBox {
-        height: 450px;
-        width: 350px;
-        background-color: azure;
-        border-radius: 10%;
-        border: 1px solid gray;
-        display: flex;
-        flex-direction: column;
+        width: 330px;
+        background: #ffffff;
+        padding: 20px 25px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
     }
 
     .sign-up-head {
         text-align: center;
-        padding: 20px;
-        margin-top: 20px;
-
+        font-size: 22px;
+        margin-bottom: 15px;
+        color: #444;
     }
 
     .form-box {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 8px;
+        gap: 12px;
 
         .wraped {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 5px;
 
-            .form-input {
-                padding: 10px;
-                width: 240px;
+            label {
+                font-size: 14px;
+                color: #555;
             }
 
+            .form-input {
+                padding: 9px;
+                border-radius: 6px;
+                border: 1px solid #bbb;
+                outline: none;
 
+                &:focus {
+                    border-color: #8a6969;
+                }
+            }
         }
 
         .submit-btn {
-            padding: 7px;
-
-            border-radius: 3px;
+            padding: 10px;
+            background-color: #8a6969;
+            color: white;
             border: none;
-            background-color: rgb(138, 105, 105);
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+
+            &:hover {
+                background-color: #745858;
+            }
         }
     }
-
 }
